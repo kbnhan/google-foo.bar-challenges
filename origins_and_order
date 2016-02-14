@@ -1,45 +1,48 @@
 def answer(x,y,z):
 	card_list = [x, y, z]
-	month = []
-	day = []
-	year = []
-	date = month
-	#print card_list
-	for i in card_list:
-		if i <= 12:
-			month.append(i)
-			day.append(i)
-			year.append(i)
-		elif i <= 31 and i > 12:
-			day.append(i)
-			year.append(i)
-		elif i > 31 and i > 12:
-			year.append(i)
-	print month 
-	print day
-	print year
-	"""for i in year:
-		if i % 4 == 0:
-			year.remove(i)
-	for i in day:
-		if i == 29:
-			day.remove(i)"""
-	if len(month) == 1 or month == day:
-		for i in year:
-			if i != month[0] and i % 4 != 0:
-				date.append(i)
-				day.remove(i)
-				break 
-		for i in day:
-			if i != month[0] and i <= 31 and i != 29:
-				date.append(i)
-				break
-		
-		#return date 
-	else:
-		return "Ambiguous"
+	month = [x for x in card_list if x <= 12]
+	day = [x for x in card_list if x <= 31]
+	year = [x for x in card_list if x % 4 != 0]
+	date_matrix = [month, day, year]
+	date_list = []
 
-	date_strings = [str(x) for x in date]
+	#test
+	print month
+	print day
+	print year 
+
+	if len(month) == 1 or\
+		len(day) == 1 or\
+		len(year) == 1 or\
+		sum(card_list)/3 == x:
+		#Loops through month, day, and year in date matrix.
+		for i in range(3):
+			if len(date_matrix[i]) == 1:
+				date_list.insert(i, date_matrix[i][0])
+			elif len(date_matrix[i]) == 2:
+				if date_matrix[i][0] == date_matrix[i][1]:
+					date_list.insert(0, date_matrix[i][0])
+					date_list.insert(1, date_matrix[i][0])
+				else:
+					for card in date_matrix[i]:
+						if card not in date_list:
+							date_list.insert(i, card) 
+			#elif len(date_matrix[i]) == 3:
+				#for card in date_matrix[i]:		
+			elif sum(card_list)/3 == x:
+				date_list.append(x)
+			#else:
+				#date_list.insert(i, 0) #test
+		print "string"
+	else:
+		print "Ambiguous" #return ambiguous - will say in final 
+
+	#test
+	print date_list
+
+
+	#For inserting "0" into m/d/y
+	"""date_strings = [str(x) for x in date]
 	#print date_strings
 	for i in range(3):
 		if len(date_strings[i]) == 1:
@@ -49,23 +52,22 @@ def answer(x,y,z):
 	if len(date_final) > 8:
 		return "Ambiguous"
 	else:
-		return date_final
+		return date_final"""
 
 
-print answer(2,30,3)
-print answer(19,19,3)
-#print answer(1,31,89)
+#print answer(2,30,3) #Ambiguous - works
+print answer(19,19,3) #String
+print answer(1,31,89)
+print answer(8,16,25)
 #print answer(80,12,12)
-print answer(12,12,12) 
-#print answer(30,1,1)
-#print answer(30,30,1)
-print answer(1,2,3)
-#print answer(3,4,5)
-#print answer(6,7,8) 
-print answer(2,29,31)
-print answer(2,25,20)
-print answer(2,25,25)
-print answer(4,4,25)
+print answer(1,1,1) #String 
+print answer(30,30,1)
+#print answer(1,2,3) #Ambiguous - works 
+print answer(2,25,20) #This isn't right #String
+print answer(2,25,25) #String
+#print answer(4,4,25) #This isn't right -works, for now 
+#print answer(8,8,25) - works 
+
 
 
 
@@ -78,3 +80,4 @@ print answer(4,4,25)
 	#return d.strftime("%m/%d/%y")
 	#datetime.datetime(date[2] + 1900, date[0], date[1], 0, 0)
     #return datetime.strftime("%m/%d/%y")"""
+	
