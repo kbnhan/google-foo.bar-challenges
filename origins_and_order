@@ -13,8 +13,7 @@ def answer(x,y,z):
 
 	if len(month) == 1 or\
 		len(day) == 1 or\
-		len(year) == 1 or\
-		sum(card_list)/3 == x:
+		len(year) == 1:
 		#Loops through month, day, and year in date matrix.
 		for i in range(3):
 			if len(date_matrix[i]) == 1:
@@ -27,13 +26,22 @@ def answer(x,y,z):
 					for card in date_matrix[i]:
 						if card not in date_list:
 							date_list.insert(i, card) 
-			#elif len(date_matrix[i]) == 3:
-				#for card in date_matrix[i]:		
-			elif sum(card_list)/3 == x:
-				date_list.append(x)
-			#else:
-				#date_list.insert(i, 0) #test
+			elif len(date_matrix[i]) == 3:
+				if day == year:
+					for card in date_matrix[i]:
+						if card not in date_list:
+							date_list.insert(1, card)
+							date_list.insert(2, card)
+							break
+				else:
+					for card in date_matrix[i]:
+						if card not in date_list:
+							date_list.insert(i, card)	
 		print "string"
+	elif sum(card_list)/3 == x:
+		print "string" 
+		for card in card_list:
+			date_list.append(card)
 	else:
 		print "Ambiguous" #return ambiguous - will say in final 
 
